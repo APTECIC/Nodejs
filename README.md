@@ -1,5 +1,7 @@
 ###Curso de Node.js
 
+Node.js es una plataforma construida en base en el runtime de Javascript en Chrome (V8). Con Node.js puede facil y velozmente contruir applicaciones escalables. Node.js trabaja en base a un modelo de eventos y con I/O non-blocking que lo convierte en una plataforma liguera y eficiente. Node.js es perfecto para proceso de datos intensos , applicaciones de tiempo real y ademas se puede ejecutar atravez de dispositivos distribuidos.
+
 ### Tabla de Contenido 
 
 * [Capitulo 1 - ](Capitulo1/README.md)

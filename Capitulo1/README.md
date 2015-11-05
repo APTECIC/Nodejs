@@ -30,9 +30,22 @@ Creemos un archivo llamado ```ex1.js``` , despues continuemos a escribir la sigu
 console.log("Hola Mundo");
 ```
 
-Node.js no es solamente un motor. V8 no tiene concepto de I/O . Node tiene un hosting para Javascript y extiende de su ambiente puro para hacer otro tipo de cosas como I/O. 
+Para inciar el script : 
+
+```
+node ex1.js
+```
+
+Node.js no es solamente un motor de V8. Si lo comparamos con V8 no tiene concepto de I/O . Lo interesante de Node es porque tiene un hosting para Javascript y extiende de su ambiente puro para hacer otro tipo de cosas como I/O. Es por eso que puedejen usar Javascript en Servidores , Arduinos , Autos ,etc.
+
+Por ejemplo, Node provee un wraper que conecta siertas funciones basicas de C como por ejemplo.
 
 Cambiemos la linea de codigo a : 
 ```
 process.stdout.write("Hello World");
 ```
+
+Asi como existe un ```process.stdout.write``` hay tambien un ```read```.
+
+
+###  ACEPTAR INPUT 

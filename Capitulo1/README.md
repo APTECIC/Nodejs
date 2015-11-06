@@ -138,3 +138,140 @@ console.log("Hola "+ program.nombre);
 ```
 
 La libreria Commander.js ya nos apoya con una serie de funciones. Podemos validar si los parametros existen si no existen imprimimos la ayuda ``` program.outputHelp() ``` y posteriormente tenemos que salir de programa. A diferencia del un programa en JS en el navegador pensariamos que es con un ``` return ``` pero como aqui no tenemos un ambiente global tenemos que llamar ```process.exit()```.
+
+### CREAR MODELS Y I/O
+
+Ahora que entendimos mejor como hacer un programa para linea de commando que tal si intentamos tomar la informacion de un archivo y lo mostramos en la consola.
+
+Vamos a crear un archivo llamado ``` modulo-holaMundo.js``` y dentro de el vamos a hacer lo siguiente :
+
+```javascript
+
+// Modulo que recibe un path a un archivo como valor
+var fs=require("fs");
+
+function decir (nombreArchivo) {
+  //Para desarrollo de programas de linea de Commando no es tan malo mandara llamar funciones Syncronus. Por que a diferencia de un Web server no hay llamadas concurrentes.  fs.readFile es la opcion para operaciones Asyncronus .
+  return fs.readFileSync(nombreArchivo);
+}
+
+module.exports.decir= decir;
+
+```
+
+Vamos a descomponer este modulo en partes. El modulos que estamos importando ``` var fs = require("fs") ``` es un libreria de parte de Node.js que nos ayuda con operaciones de I/O . La linea ``` fs.readFileSync(nombreArchivo)``` es la funcion que nos va ayudar a leer el archivo en forma Syncronus.
+
+Los modulos de Node.js utilizan el modelo de CommonJS en donde los archivos tienen su propio scope y no tenemos que utlizar ``` module.exports``` como public API.
+
+Ahora un vez que realizamos este modulo cambiemos un poco el programa anterios.
+
+```javascript
+...
+  .option('-a, --archivo <archivo>','Input Nombre de Archivo')
+...
+var hola = require("./modulo-holaMundo.js");
+
+var contenido  = hola.decir(program.archivo);
+
+console.log(contenido);
+
+```
+
+Creemos un archivo de text ``` archivo.txt``` con el contenido de ``` HOLA DESDE UN ARCHIVO```.
+
+y al ejecutar el programa van a ver lo siguiente :
+
+```bash
+$ node ex3.js -a archivo.txt
+<Buffer 48 6f 6c 61 20 64 65 73 64 65 20 75 6e 20 61 72 63 68 69 76 6f 0a>
+$
+```
+
+No es necesariamente lo que estabamos esperando. Un ```Buffer``` en Node.js un representacion binaria eficiente que Node.js utiliza para trasmitir archivo. Los Buffers son muy comunes en Node.js. Para convertir el Buffer a String simplemente hagamos un ```.toString()``` en la siguiente linea :
+
+```javascript
+console.log(contenido.toString());
+```
+
+```bash
+$ node ex3.js -a archivo.txt
+HOLA DESDE UN ARCHIVO
+
+$
+```
+
+Ahora reflexionemos un poco sobre lo que acabamos de hacer. Creamos un archivo completamente separado en nuestro directorio que esta actuando como un modulo. Esta es la forma en la cual Node.js organiza sus funciones en pequeñas tareas y esto cae sobre el Patron de Modulo (Module Pattern) pero las otros patrones estan disponibles (delegaciones y prototypos ) pero 90% de las ocaciones asi es como se trabajaria en Node.js.
+
+### CONVERTIR NUESTRO MODULO EN ASYNCRONUS
+
+Nuestro ejemplo anterio realizamos la lectura del ```archivo.txt``` de forma Syncronus lo cual provee un 'blocking scrope'. Vamos a convertir nuestro modulo en a Asyncronus como la mayoria de las cosas trabajan en Node.js .
+
+```javascript
+...
+// Forma Syncronus
+function decirSync (nombreArchivo) {
+  return fs.readFileSync(nombreArchivo);
+}
+
+// Forma Asyncronus
+
+function decir(nombreArchivo, cb){
+  return fs.readFile(nombreArchivo,cb);
+}
+
+module.exports.decir= decirSync;
+module.exports.decirAsync = decir;
+
+```
+
+Ahora modifiquemos nuestro programa:
+
+```javascript
+...
+var hola = require("./modulo-holaMundo.js");
+
+hola.decirAsync(program.archivo, function(err , contenido){
+    console.log(contenido.toString());
+});
+
+```
+
+La forma mas natural de manera Asyncronus en Node.js es con ```callbacks``` mas sin embargo no es la mejor forma de trabajar con ellos por que muy facilmente podemos llegar a lo que llaman un CALLBACK HELL. Pero la forma mas sencilla y natura en Node.js de trabajar con Asyncronus es de esta manera.
+
+Usualmente las funciones de callbacks tiene la forma de ``` error first parameter ``` que significa que el primer parametro es el error. Si nosotros corremos el programa de esta manera y damos un archivo que no existe nuestro forma va a fallar. Entonces vamos a resolver este problema.
+
+```javascript
+
+...
+hola.decirAsync(program.archivo, function(err , contenido){
+if(err){
+    console.error("Error : " + err);
+}else{
+    console.log(contenido.toString());
+}
+...
+
+```
+
+Ahora vamos a modificar el modulo de nuevo y hagamos lo siguiente :
+
+```javascript
+...
+// Forma Simulada Delay
+function decirDelay(nombreArchivo, cb){
+  return fs.readFile(nombreArchivo,function(err, contenido){
+    if ( err ){
+      cb(err);
+    }else{
+      setTimeout(function(){
+        cb(null, contenido);
+      },1000);
+    }
+  });
+}
+
+...
+module.exports.decirDelay = decirDelay;
+```
+
+De esta forma validad que si es error existe lo imprimamos de inmediato y estamos simulando que toma un segundo leer el archivo que seria algo similar a llamar una base de datos o hacer una cierta operacion. Con este ejemplo podemos ver un operacion Asyncronica en su totalidad.

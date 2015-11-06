@@ -368,3 +368,17 @@ $ npm init
 * Por ultimo para publicar hacer ``` npm publish```
 
 Para remover el modulo lo podemos hacer a travez de ``` npm unpublish <nombre-modulo> --force```
+
+Cabe mencionar que existe una herramienta donde podemos utilizar [Browserfy](http://browserify.org/) y [jspm.io](http://jspm.io/) que nos ayudan a traer modulos de Node.js al navegador. Ahora si se desea crear un modulo que no necesite esto lo puedes hacer bajo el siguiente UMD Pattern (UMD (Universal Module Definition) patterns for JavaScript modules that work everywhere.)
+
+```javascript
+(function UMD(name,context,definition){
+  if(typeof module !== "undefined" && module.exports){ module.exports = definition();}
+  else if (typeof define === "undefined" && define.amd) { define(definition); }
+  else {contet[name] = definition(name,context);}
+})("<NOMBRE DEL MODULO>", this,function DEF(name , context){
+
+  var publicAPI = {/*. <codigo> .*/}
+  return publicAPI
+});
+```

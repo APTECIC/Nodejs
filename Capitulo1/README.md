@@ -77,3 +77,5 @@ console.log("Hola " + nombre);
 Una vez guardado el documento llendo a nuestra linea de comando llamamos el documento ```$ node ex1.js``` y vemos que no imprimira nada adicional ya que no le colocamos un argv y nos saldra ```Hola undefined```. Pero si nosotros colocamos uno despues del nombre de nuestro documento ```$ node ex1.js Mundo``` nos imprimira lo que queriamos ```Hola Mundo```.
 
 ### AYUDA EN COMMAND LINE
+ 
+Esta es una de las formas mas sencillas de enviar utilizar parametros. Pero ahora vamos a utilizar un modulo en Node.js . Vamos a usar la libreria de [Commander.js](https://github.com/tj/commander.js). Vamos a utilizar en una linea de comando y corramos la siguiente linea ```bash $ npm install commander```

@@ -326,3 +326,45 @@ hola.decirPromesa(program.archivo)
 ```
 
 Como pueden ver al utilizar Promesas tenemos un codigo mas limpio y facil de manipular.
+
+### MODULOS DE NPM
+
+Ahora que ya tuvimos un poco de practica con Node.js ahora vamos a hablar sobre en administrador de packetes `npm`. Nosotros ya hemos utilizados un poco al instalar commander y bluebird. Ahora de donde provienen estos paquetes. Estos paquetess provienen del repositorio central [npmjs.org](https://www.npmjs.com/) este repositorio es publico y muchos desarrolladores alrededor del mundo comparten sus codigo para otros los usen. Y tiene un mecanismo de actualizacion y manejo de versiones. Ahora si estamos interesados en publicar nuestro modulo ```modulo-holaMundo.js``` tendriamos que hacer los siguientes pasos:
+
+* []Crear un repositorio publico (GitHub por ejemplo).
+* []Tenemos que creear un package.json que no es mas que una descripcion del modulo.
+```bash
+$ npm init
+```
+ Agregar una version inicial( Node usa version semantica)
+```json
+{
+  "name": "ex1",
+  "version": "0.0.1",
+  "description": "Curso APTECIC Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.0.5",
+    "commander": "^2.9.0"
+  }
+}
+
+```
+* []Agregar el repositorio bajo la siguiente estructura:
+```json
+..
+“repository”: {
+     "type":“git”,
+     "url":“http://github.com/user/repo-name”
+}, …
+```
+* []Crear una cuenta de [NPM](https://www.npmjs.com/signup)
+* []Agregar el usuario que creamos a nuestro npm local ``` npm adduser <usuario>``` eh insertar el path del project
+* []Por ultimo para publicar hacer ``` npm publish```
+
+Para remover el modulo lo podemos hacer a travez de ``` npm unpublish <nombre-modulo> --force```

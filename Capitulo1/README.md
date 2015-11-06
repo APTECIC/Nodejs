@@ -139,7 +139,7 @@ console.log("Hola "+ program.nombre);
 
 La libreria Commander.js ya nos apoya con una serie de funciones. Podemos validar si los parametros existen si no existen imprimimos la ayuda ``` program.outputHelp() ``` y posteriormente tenemos que salir de programa. A diferencia del un programa en JS en el navegador pensariamos que es con un ``` return ``` pero como aqui no tenemos un ambiente global tenemos que llamar ```process.exit()```.
 
-### CREAR MODELS Y I/O
+### CREAR MODULO Y MANEJO DE I/O
 
 Ahora que entendimos mejor como hacer un programa para linea de commando que tal si intentamos tomar la informacion de un archivo y lo mostramos en la consola.
 
@@ -275,3 +275,54 @@ module.exports.decirDelay = decirDelay;
 ```
 
 De esta forma validad que si es error existe lo imprimamos de inmediato y estamos simulando que toma un segundo leer el archivo que seria algo similar a llamar una base de datos o hacer una cierta operacion. Con este ejemplo podemos ver un operacion Asyncronica en su totalidad.
+
+
+### PROMESAS EN JAVASCIRPT
+
+Un nueva forma de trabajar en Javascript y especialmente ahora con ES6 es el uso de Promesas. Y una Promesa no es mas que nada un froma de procesar llamados Asyncronus. Vamos a modificar nuestro modulo para utilizar una Promesa. En esta ocacion vamos a utilizar la libreria [bluebid](https://github.com/petkaantonov/bluebird/) que nos va a ayudar a simplicar muchas cosas.
+
+```bash
+npm install bluebird
+```
+
+Ahora modifiquemos nuestro modulo ```modulo-holaMundo.js``` :
+
+```javascript
+var Promise = require("bluebird");
+var fs=require("fs");
+Promise.promisifyAll(fs);
+
+function decir(nombreArchivo){
+  return new Promise(function (resolve, reject){
+    fs.readFileAsync(nombreArchivo)
+      .then(function(contenido){
+        setTimeout(function(){
+          resolve(contenido);
+        },1000);
+      })
+      .catch(function(e){
+        reject(e);
+      });
+  });
+}
+
+module.exports.decirPromesa = decir;
+```
+
+La libreria bluebid nos va ayudar a convertir 'fs' a un Promesa en vez de error first parameters. Ahora modifiquemos nuestro programa.
+
+```javascript
+....
+var hola = require("./modulo-holaMundo-Promesa.js");
+
+hola.decirPromesa(program.archivo)
+  .then(function(contenido){
+    console.log(contenido.toString());
+  })
+  .catch(function(err){
+    console.error("Error : " + err);
+});
+
+```
+
+Como pueden ver al utilizar Promesas tenemos un codigo mas limpio y facil de manipular.

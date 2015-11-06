@@ -14,7 +14,7 @@ Node.js es una plataforma construida en base en el runtime de Javascript en Chro
 * Git  ( [Instrucciones para Instalar Git](http://git-scm.com/) )
 * Crear una perfil en GitHub ( [Github.com](https://github.com/) )
 * Node.js ( [Instrucciones para Instalar Node y npm](https://nodejs.org/en/download/) )
- 
+* Cywin ( [Installacion para Win solamente](http://cygwin.com/install.html) )
 
 Para comprobar que la installacion es correcta en la Termianl (Command en Win) executar lo siguiente : 
 ```bash

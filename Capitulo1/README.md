@@ -470,3 +470,10 @@ function decir(nombreArchivo){
   });
 }
 ```
+Ahora una de las cosas mas poderasas de Node.js es que podemos hacer Pipe (es el proceso de pasar el resultado de una operacion a otra). En nuestro stream podemos hacer una funcion Pipe para crear un arhivo de respaldo.
+
+y esto se pude hacer agregando una linea :
+```javascript
+stream.pipe(fs.createWriteStream(nombreArchivo + ".backup"));
+```
+Si estan interesado en aprender mas sobre stream pueden utiliar la pagina de [Node Streams](http://nodestreams.com/) para ver todas las posibilidades.

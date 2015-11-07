@@ -20,12 +20,13 @@ function decir(nombreArchivo){
 }
 
 // Read Stream
-
+//
 // function decir(nombreArchivo){
 //   return new Promise(function (resolve, reject){
 //      var opciones = {encoding :'utf8', flag:'r'};
 //      var stream = fs.createReadStream(nombreArchivo, opciones);
 //      var contenido = "";
+//
 //
 //      stream.on('data',function(chunk){
 //        //concatenar el contenido del archivo
@@ -38,6 +39,8 @@ function decir(nombreArchivo){
 //      stream.on('error',function(err){
 //        reject(err);
 //      })
+//      // pipe
+//      //stream.pipe(fs.createWriteStream(nombreArchivo + ".backup"));
 //   });
 // }
 

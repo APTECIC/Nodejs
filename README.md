@@ -1,4 +1,4 @@
-`###Curso de Node.js
+###Curso de Node.js
 
 Node.js es una plataforma construida en base en el runtime de Javascript en Chrome (V8). Con Node.js puede facil y velozmente contruir applicaciones escalables. Node.js trabaja en base a un modelo de eventos y con I/O non-blocking que lo convierte en una plataforma liguera y eficiente. Node.js es perfecto para proceso de datos intensos , applicaciones de tiempo real y ademas se puede ejecutar atravez de dispositivos distribuidos.
 
@@ -14,10 +14,8 @@ Node.js es una plataforma construida en base en el runtime de Javascript en Chro
 * Git  ( [Instrucciones para Instalar Git](http://git-scm.com/) )
 * Crear una perfil en GitHub ( [Github.com](https://github.com/) )
 * Node.js ( [Instrucciones para Instalar Node y npm](https://nodejs.org/en/download/) )
-<<<<<<< HEAD
 * Cywin ( [Installacion para Win solamente](http://cygwin.com/install.html) )
-=======
->>>>>>> course
+
 
 
 Para comprobar que la installacion es correcta en la Termianl (Command en Win) executar lo siguiente :

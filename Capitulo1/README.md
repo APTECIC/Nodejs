@@ -441,3 +441,32 @@ module.exports = function(grunt) {
 
 };
 ```
+
+### FILE STREAM Y PIPING STREAMS
+
+Nuestro programa de Node.js funciona muy bien para leer archivos pequeños pero que tal si queremos transmitir archivos de tamaños mas grandes. Para este tipo de situaciones podemos tenemos la opcion de utilizar ```Readable stream``` .
+
+La ventaja de utilizar un Stream es que los Buffer se mandan en partes pequeñas lo que cual permite pausar y reiniciar transmisiones de archivos.
+
+Modifiquemos nuestro programa :
+```javascript
+function decir(nombreArchivo){
+  return new Promise(function (resolve, reject){
+     var opciones = {encoding :'utf8', flag:'r'};
+     var stream = fs.createReadStream(nombreArchivo, opciones);
+     var contenido = "";
+
+     stream.on('data',function(chunk){
+       //concatenar el contenido del archivo
+       console.log('=====================DATA=====================');
+       contenido += chunk;
+     })
+     stream.on('end',function(){
+       resolve(contenido);
+     });
+     stream.on('error',function(err){
+       reject(err);
+     })
+  });
+}
+```

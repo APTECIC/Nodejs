@@ -477,3 +477,52 @@ y esto se pude hacer agregando una linea :
 stream.pipe(fs.createWriteStream(nombreArchivo + ".backup"));
 ```
 Si estan interesado en aprender mas sobre stream pueden utiliar la pagina de [Node Streams](http://nodestreams.com/) para ver todas las posibilidades.
+
+### NODE.JS WEBSERVER
+
+Ahora vamos a parender sobre como hacer un pequeño servidor Web en Node.js.
+
+```javascript
+function manejarHttp(req,res){
+
+  res.writeHead(200,{"Content-type":"plain/text"});
+  res.end("BOOM!!!! SERVIDOR WEB ARRIBA ");
+
+}
+
+var host = "localhost";
+var port = 8081;
+
+var http = require("http");
+var servidor = http.createServer(menejoHttp).listen(port,host);
+
+```
+Con unas cuantas lineas de condigo podemos inciar un simple servidor web para nuestra pagina. Node.js biene con un modulo llamado http que nos va a ayudar a manejar todas las acciones de servidor.
+
+El ejemplo anterior es una forma muy sencilla de crear un Web Server pero existen muchos frameworks mas completos que nos ayudan a manejar middleware ,sessiones , error ,etc.
+
+A continuaciones vamos a utlizar Express.js:
+
+* Instalemos el generador de express:
+```bash
+ $ npm install express-generator -g
+```
+* Vamos a inciar nuestro nuevo WebApp
+```bash
+$ express WebApp
+```
+* Finalmente vamos a instalar las dependencias
+```bash
+$ cd WebApp
+$ npm install
+```
+
+Ahora express-generator va a installar toda una estructura para nuestro web server.Para iniciarlo lo podemos haer de la siguiente manera.
+
+```bash
+$ DEBUG=myapp:* npm start
+// Para windows
+> set DEBUG=myapp:* & npm start
+```
+
+Ahora nuestro servidor va a estar corriendo en http://localhost:3000/

@@ -382,3 +382,62 @@ Cabe mencionar que existe una herramienta donde podemos utilizar [Browserfy](htt
   return publicAPI
 });
 ```
+
+### HERRAMIENTAS EN NODE.JS ( GRUNT & GULP)
+
+Hay que hacer un aparto especial para decir que dentro del ecosistema de Node extiste un tipo de herramientas para hacer mas sencillo el proceso de "build" (seria una equivalencia a compilacion en lenguajes compilados).
+
+Las dos herramientas mas populares son [Grunt](http://gruntjs.com/) y [Gulp](http://gruntjs.com/).
+
+Grunt trabaja en base a configuracion. Usualmente el archivo es llamado  ```Gruntfile.js``` y declarativamente especificas los pasos de tu proceso de build.
+
+
+Gulp de lo contrario no siguie una configuracion simplemente creas tareas que provee un poco de flexibilildad.
+
+A continuacion vamos a mostrar como agregar JSLint :
+
+* Vamos a agregar la librerias de Grunt : npm install -g grunt-cli
+
+* Ahora en el ```package.json``` vamos a agregar las siguientes dependencias:
+
+```json
+...
+"devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-watch":
+ }
+...
+```
+
+Otra opcion es instalarlos atravez de npm :
+
+```bash
+$ npm install grunt --save-dev
+$ npm install grunt-contrib-jshint --save-dev
+$ npm install grunt-contrib-watch --save-dev
+```
+
+* Ahora vamos a crear el GruntFile.js :
+
+```javascript
+module.exports = function(grunt) {
+
+  grunt.initConfig({
+    jshint: {
+      files: ['Gruntfile.js', '*.js', 'test/**/*.js'],
+      options: {
+      }
+    },
+    watch: {
+      files: ['<%= jshint.files %>'],
+      tasks: ['jshint']
+    }
+  });
+
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.registerTask('default', ['jshint']);
+
+};
+```
